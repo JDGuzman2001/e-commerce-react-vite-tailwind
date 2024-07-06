@@ -9,7 +9,9 @@ function MyOrders() {
   // console.log('MyOrders: ', context.order)
     return (
       <Layout>
-        My Orders
+        <div className="flex items-center justify-center realtive w-80 mb-4">
+          <h1 className="font-medium text-xl">My Orders</h1>
+        </div>
         {
           context.order.map((order, index) => (
             <Link to={`/my-orders/${index}`}>
