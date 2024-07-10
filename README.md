@@ -19,11 +19,11 @@ This project is an E-Commerce application built using React, Vite, and Tailwind 
 ### Installation
 1. Clone the repository:
 ```
-git clone https://github.com/your-username/ecommerce-app.git
+git clone https://github.com/JDGuzman2001/e-commerce-react-vite-tailwind.git
 ```
 2. Navigate to the project directory:
 ```
-cd ecommerce-app
+cd e-commerce-react-vite-tailwind
 ```
 3. Install the dependencies:
 ```
