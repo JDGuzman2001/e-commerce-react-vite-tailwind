@@ -30,6 +30,12 @@ export const ShoppingCartProvider = ({children}) => {
     const [items, setItems] = useState(null)
     const [filteredItems, setFilteredItems] = useState(null)
 
+    // Get products by title
+    const [searchByTitle, setSearchByTitle] = useState(null)
+
+    // Get products by category
+    const [searchByCategory, setSearchByCategory] = useState(null)
+
     useEffect(() => {
         fetch('https://fakestoreapi.com/products')
         .then(res=>res.json())
@@ -37,21 +43,9 @@ export const ShoppingCartProvider = ({children}) => {
     }, [])
 
 
-    // Get products by title
-    const [searchByTitle, setSearchByTitle] = useState(null)
-    
-
     const filteredItemsByTitle = (items, searchByTitle) => {
        return items?.filter(item => item.title.toLowerCase().includes(searchByTitle.toLowerCase()))
     }
-
-    useEffect(() => {
-        if (searchByTitle) setFilteredItems(filteredItemsByTitle(items, searchByTitle))
-
-    }, [items, searchByTitle])
-
-    // Get products by category
-    const [searchByCategory, setSearchByCategory] = useState(null)
 
     const filteredItemsByCategory = (items, searchByCategory) => {
         if (searchByCategory === 'clothes') { 
@@ -85,11 +79,7 @@ export const ShoppingCartProvider = ({children}) => {
         if (!searchByTitle && searchByCategory) setFilteredItems(filterBy('BY_CATEGORY', items, searchByTitle, searchByCategory))
         if (!searchByTitle && !searchByCategory) setFilteredItems(filterBy(null, items, searchByTitle, searchByCategory))
  
-     }, [items, searchByCategory])
-
-     console.log('filteredItems', filteredItems)
-
-    
+     }, [items, searchByTitle, searchByCategory])
 
     return (
         <ShoppingCartContext.Provider value={{
