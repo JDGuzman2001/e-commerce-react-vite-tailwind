@@ -1,39 +1,47 @@
-import { useState, useEffect } from 'react'
+import { useContext } from 'react'
 import Layout from '../../Components/Layout'
 import Card from '../../Components/Card'
 import ProductDetail from '../../Components/ProductDetail'
+import { ShoppingCartContext } from '../../Context'
 
 function Home() {
-  const [items, setItems] = useState(null)
+    const context = useContext(ShoppingCartContext)
 
-  useEffect(() => {
-    fetch('https://fakestoreapi.com/products')
-      .then(res=>res.json())
-      .then(data=> setItems(data))
-  }, [])
+    const renderView = () => {
+        if (context.filteredItems?.length > 0){
+          return(
+            context.filteredItems?.map(item => (
+              <Card key={item.id} data={item} />
+            ))
+          )
+        } else {
+          return(
+            <div>No results found</div>
+          )
+        }
+    }
+
 
     return (
       <Layout>
-        Home
-        {
-          items ? (
-            <div className='grid gap-8 grid-cols-4 w-full max-w-screen-lg'>
-              {
-                items.map(item => (
-                  <Card key={item.id} data={item}/>
-                ))
-              }
-            </div>
+        <div className="flex items-center justify-center realtive w-80 mb-4">
+          <h1 className="font-medium text-xl">Exclusive Products</h1>
+        </div>
+        <input 
+          type="text" 
+          placeholder="Search a product"
+          className="rounded-lg border border-black w-80 p-4 mb-4 focus:outline-none"
+          onChange={(event) => context.setSearchByTitle(event.target.value)} 
+        />
+        {!context.items ? (
+          <div className="text-xl flex items-center justify-center w-full h-screen">Loading...</div>
           ) : (
-            <div className='flex flex-col items-center mt-500 '>
-              Loading...
+            <div className='grid gap-8 grid-cols-4 w-full max-w-screen-lg'>
+                {renderView()}
             </div>
           )
         }
-        <ProductDetail />
-        
-        
-        
+        <ProductDetail />    
       </Layout>
     )
   }
